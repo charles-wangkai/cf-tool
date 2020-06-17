@@ -85,7 +85,7 @@ type CodeList struct {
 	Index []int
 }
 
-func getCode(filename string, templates []config.CodeTemplate) (codes []CodeList, err error) {
+func getCode(path string, filename string, templates []config.CodeTemplate) (codes []CodeList, err error) {
 	mp := make(map[string][]int)
 	for i, temp := range templates {
 		suffixMap := map[string]bool{}
@@ -106,28 +106,31 @@ func getCode(filename string, templates []config.CodeTemplate) (codes []CodeList
 		return nil, fmt.Errorf("%v can not match any template. You could add a new template by `cf config`", filename)
 	}
 
-	path, err := os.Getwd()
-	if err != nil {
-		return
+	if path == "" {
+		path, err = os.Getwd()
+		if err != nil {
+			return
+		}
 	}
+
 	paths, err := ioutil.ReadDir(path)
 	if err != nil {
 		return
 	}
 
-	for _, path := range paths {
-		name := path.Name()
+	for _, p := range paths {
+		name := p.Name()
 		ext := filepath.Ext(name)
 		if idx, ok := mp[ext]; ok {
-			codes = append(codes, CodeList{name, idx})
+			codes = append(codes, CodeList{filepath.Join(path, name), idx})
 		}
 	}
 
 	return codes, nil
 }
 
-func getOneCode(filename string, templates []config.CodeTemplate) (name string, index int, err error) {
-	codes, err := getCode(filename, templates)
+func getOneCode(path string, filename string, templates []config.CodeTemplate) (name string, index int, err error) {
+	codes, err := getCode(path, filename, templates)
 	if err != nil {
 		return
 	}

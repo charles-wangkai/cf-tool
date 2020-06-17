@@ -137,6 +137,6 @@ func (c *Client) Pull(info Info, rootPath string, ac bool) (err error) {
 
 	color.Cyan("These submissions' codes have been saved.")
 	maxline := 0
-	display(used, "", true, &maxline, false)
+	display(used, "", "", true, &maxline, false)
 	return nil
 }

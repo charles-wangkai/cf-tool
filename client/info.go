@@ -85,7 +85,7 @@ func (info *Info) Path() string {
 		path = filepath.Join(path, info.ContestID)
 	}
 	if info.ProblemID != "" {
-		path = filepath.Join(path, strings.ToLower(info.ProblemID))
+		path = filepath.Join(path, info.ProblemID)
 	}
 	return path
 }

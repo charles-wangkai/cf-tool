@@ -93,10 +93,11 @@ func updateLine(line string, maxWidth *int) string {
 	return line
 }
 
-func (s *Submission) display(first bool, maxWidth *int) {
+func (s *Submission) display(contestID string, first bool, maxWidth *int) {
 	if !first {
-		ansi.CursorUp(7)
+		ansi.CursorUp(8)
 	}
+	ansi.Printf("    url: %v\n", fmt.Sprintf("https://codeforces.com/contest/%v/submission/%v", contestID, s.ParseID()))
 	ansi.Printf("      #: %v\n", s.ParseID())
 	ansi.Printf("   when: %v\n", s.when)
 	ansi.Printf("   prob: %v\n", s.name)
@@ -107,9 +108,9 @@ func (s *Submission) display(first bool, maxWidth *int) {
 	ansi.Printf(" memory: %v\n", s.ParseMemory())
 }
 
-func display(submissions []Submission, problemID string, first bool, maxWidth *int, line bool) {
+func display(submissions []Submission, contestID string, problemID string, first bool, maxWidth *int, line bool) {
 	if line {
-		submissions[0].display(first, maxWidth)
+		submissions[0].display(contestID, first, maxWidth)
 		return
 	}
 	var buf bytes.Buffer
@@ -290,7 +291,7 @@ func (c *Client) WatchSubmission(info Info, n int, line bool) (submissions []Sub
 		if err != nil {
 			return
 		}
-		display(submissions, info.ProblemID, first, &maxWidth, line)
+		display(submissions, info.ContestID, info.ProblemID, first, &maxWidth, line)
 		first = false
 		endCount := 0
 		for _, submission := range submissions {

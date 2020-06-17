@@ -57,7 +57,7 @@ func (c *Client) ParseProblem(URL, path string, mu *sync.Mutex) (samples int, st
 	}
 
 	standardIO = true
-	if !bytes.Contains(body, []byte(`<div class="input-file"><div class="property-title">input</div>standard input</div><div class="output-file"><div class="property-title">output</div>standard output</div>`)) {
+	if !bytes.Contains(body, []byte(`>standard input<`)) {
 		standardIO = false
 	}
 
@@ -119,7 +119,7 @@ func (c *Client) Parse(info Info) (problems []string, paths []string, err error)
 	mu := sync.Mutex{}
 	paths = make([]string, len(problems))
 	for i, problemID := range problems {
-		paths[i] = filepath.Join(contestPath, strings.ToLower(problemID))
+		paths[i] = filepath.Join(contestPath, problemID)
 		go func(problemID, path string) {
 			defer wg.Done()
 			mu.Lock()

@@ -164,7 +164,7 @@ var ArgRegStr = [...]string{
 	fmt.Sprintf(`/problemsets/acmsguru/problem/(?P<contestID>%v)/(?P<problemID>%v)`, ContestRegStr, ProblemRegStr),
 	fmt.Sprintf(`/problemsets/acmsguru/submission/(?P<contestID>%v)/(?P<submissionID>%v)`, ContestRegStr, SubmissionRegStr),
 	fmt.Sprintf(`/submission/(?P<submissionID>%v)`, SubmissionRegStr),
-	fmt.Sprintf(`^(?P<contestID>%v)(?P<problemID>%v)$`, ContestRegStr, StrictProblemRegStr),
+	fmt.Sprintf(`^(?P<contestID>%v)/(?P<problemID>%v)$`, ContestRegStr, StrictProblemRegStr),
 	fmt.Sprintf(`^(?P<contestID>%v)$`, ContestRegStr),
 	fmt.Sprintf(`^(?P<problemID>%v)$`, StrictProblemRegStr),
 	fmt.Sprintf(`^(?P<groupID>%v)$`, GroupRegStr),

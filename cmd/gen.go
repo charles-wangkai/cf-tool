@@ -37,7 +37,7 @@ func readTemplateSource(path string, cln *client.Client) (source string, err err
 }
 
 func gen(source, currentPath, ext string) error {
-	path := filepath.Join(currentPath, filepath.Base(currentPath))
+	path := filepath.Join(currentPath, "Main")
 
 	savePath := path + ext
 	i := 1
